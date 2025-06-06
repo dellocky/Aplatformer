@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://47dn8f5ah8r0" path="res://pictures/Heart.png" id="1_yrwjy"]
 
 [node name="Heart" type="Sprite2D"]
-position = Vector2(422, 326)
-scale = Vector2(18.6875, 16)
+position = Vector2(579.125, 328)
+scale = Vector2(71.6094, 40.4375)
+texture = ExtResource("1_yrwjy")
+
+[node name="Heart" type="Sprite2D" parent="."]
+position = Vector2(16.0855, 0.370943)
 texture = ExtResource("1_yrwjy")
