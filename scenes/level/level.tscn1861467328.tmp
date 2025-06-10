@@ -3,22 +3,21 @@
 [ext_resource type="Script" uid="uid://rxnckltu4rf4" path="res://scenes/level/menu.gd" id="1_h3e3j"]
 [ext_resource type="Script" uid="uid://qt0f0h22xx0n" path="res://scenes/level/data/data.gd" id="2_i166f"]
 [ext_resource type="Script" uid="uid://utnw8xscupdg" path="res://scenes/level/data/settings.gd" id="3_i166f"]
-[ext_resource type="Script" uid="uid://cnru820wn2gqw" path="res://scenes/level/signal_settings.gd" id="4_hnne4"]
+[ext_resource type="Script" uid="uid://dajof6ct443pq" path="res://scenes/level/rebind_buttons.gd" id="4_qkmgm"]
 [ext_resource type="Script" uid="uid://0phu5pw0dni8" path="res://scenes/level/key_button.gd" id="5_hnne4"]
 
 [node name="menu" type="Node2D"]
 script = ExtResource("1_h3e3j")
-
-[node name="signal_control" type="Node2D" parent="."]
-
-[node name="signal_settings" type="Node2D" parent="signal_control"]
-script = ExtResource("4_hnne4")
 
 [node name="data" type="Node2D" parent="."]
 script = ExtResource("2_i166f")
 
 [node name="settings" type="Node2D" parent="data"]
 script = ExtResource("3_i166f")
+
+[node name="signal_control" type="Node2D" parent="."]
+
+[node name="signal_settings" type="Node2D" parent="signal_control"]
 
 [node name="ui" type="Control" parent="."]
 layout_mode = 3
@@ -30,6 +29,7 @@ offset_bottom = 40.0
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("4_qkmgm")
 
 [node name="key_button" type="Button" parent="ui/rebind_buttons"]
 layout_mode = 0
