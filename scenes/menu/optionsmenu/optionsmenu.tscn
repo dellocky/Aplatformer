@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp3ank7ogy258"]
+
+[ext_resource type="Script" uid="uid://0phu5pw0dni8" path="res://scenes/menu/optionsmenu/key_button.gd" id="1_isli2"]
+
+[node name="optionsmenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="rebind_buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="key_button" type="Button" parent="rebind_buttons"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 91.0
+offset_bottom = 32.0
+text = "increment"
+script = ExtResource("1_isli2")
