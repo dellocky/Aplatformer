@@ -12,8 +12,11 @@ const INPUT_RUN_RIGHT = "run_r"
 const INPUT_RUN_LEFT = "run_l"
 
 func _physics_process(delta):
-	# Apply gravity
-	velocity.y += GRAVITY * delta
+	# Apply gravity only if not on the floor
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	else:
+		velocity.y = 0  # Reset vertical velocity when on the floor
 
 	# Handle horizontal movement
 	if Input.is_action_pressed(INPUT_RUN_RIGHT):
