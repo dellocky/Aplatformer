@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bl6rn1y6tepmc"]
+
+[ext_resource type="Script" uid="uid://rxnckltu4rf4" path="res://scenes/menu/menu.gd" id="1_h3e3j"]
+[ext_resource type="Script" uid="uid://qt0f0h22xx0n" path="res://scenes/menu/data/data.gd" id="2_i166f"]
+[ext_resource type="Script" uid="uid://utnw8xscupdg" path="res://scenes/menu/data/settings.gd" id="3_i166f"]
+[ext_resource type="Script" uid="uid://cnru820wn2gqw" path="res://scenes/menu/signal_settings.gd" id="4_hnne4"]
+[ext_resource type="PackedScene" uid="uid://cp3ank7ogy258" path="res://scenes/menu/optionsmenu/optionsmenu.tscn" id="5_38db7"]
+
+[node name="menu" type="Node2D"]
+script = ExtResource("1_h3e3j")
+
+[node name="signal_control" type="Node2D" parent="."]
+
+[node name="signal_settings" type="Node2D" parent="signal_control"]
+script = ExtResource("4_hnne4")
+
+[node name="data" type="Node2D" parent="."]
+script = ExtResource("2_i166f")
+
+[node name="settings" type="Node2D" parent="data"]
+script = ExtResource("3_i166f")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="mainmenu" type="Control" parent="ui"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="optionsmenu" parent="ui" instance=ExtResource("5_38db7")]
