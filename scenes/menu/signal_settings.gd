@@ -1,16 +1,12 @@
 extends Node2D
-var key_button
-var settings_node
 
-func _ready():
-	key_button = get_node("../../ui/rebind_buttons/key_button")
-	settings_node = get_node("../../data/settings")
+@onready var settings_node = get_node("../../data/settings")
 
-	# Connect key_button → signal_settings
-	key_button.button_rebind.connect(rebind)
-
-	# Store the settings node if needed
-	
+#recives the rebind command and stores the new information into the temparary json store
 func rebind(data):
-	settings_node.json_data[data[0]] = data[1]
+	print("Settings: Received rebind call with data:", data)
+	var key = data[0] #field name
+	var value = data[1] #field value
+	settings_node.json_data["controls"][key] = value
 	settings_node.json_store_write()
+	print("Settings: Updated and saved settings")

@@ -1,34 +1,76 @@
 [gd_scene load_steps=6 format=3 uid="uid://bl6rn1y6tepmc"]
 
 [ext_resource type="Script" uid="uid://rxnckltu4rf4" path="res://scenes/menu/menu.gd" id="1_h3e3j"]
-[ext_resource type="Script" uid="uid://qt0f0h22xx0n" path="res://scenes/menu/data/data.gd" id="2_i166f"]
+[ext_resource type="Texture2D" uid="uid://dno7ngdgvd68n" path="res://pictures/tonygod.jpg" id="2_38db7"]
+[ext_resource type="Script" uid="uid://bb3fxfifu3vfb" path="res://scenes/menu/data/data.gd" id="2_i166f"]
 [ext_resource type="Script" uid="uid://utnw8xscupdg" path="res://scenes/menu/data/settings.gd" id="3_i166f"]
 [ext_resource type="Script" uid="uid://cnru820wn2gqw" path="res://scenes/menu/signal_settings.gd" id="4_hnne4"]
-[ext_resource type="PackedScene" uid="uid://cp3ank7ogy258" path="res://scenes/menu/optionsmenu/optionsmenu.tscn" id="5_38db7"]
 
 [node name="menu" type="Node2D"]
 script = ExtResource("1_h3e3j")
 
+[node name="Background" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(576, 126)
+scale = Vector2(1.8, 0.8)
+texture = ExtResource("2_38db7")
+
 [node name="signal_control" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="signal_settings" type="Node2D" parent="signal_control"]
 script = ExtResource("4_hnne4")
+metadata/_edit_lock_ = true
 
 [node name="data" type="Node2D" parent="."]
 script = ExtResource("2_i166f")
+metadata/_edit_lock_ = true
 
 [node name="settings" type="Node2D" parent="data"]
 script = ExtResource("3_i166f")
+metadata/_edit_lock_ = true
 
-[node name="ui" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="ui" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="mainmenu" type="Control" parent="ui"]
+[node name="main_menu" type="Control" parent="CanvasLayer/ui"]
+layout_mode = 2
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 0.909
+offset_bottom = 58.968
 
-[node name="optionsmenu" parent="ui" instance=ExtResource("5_38db7")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ui/main_menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41
+anchor_top = 0.377
+anchor_right = 0.577
+anchor_bottom = 0.532
+offset_left = -0.320038
+offset_top = -0.296005
+offset_right = 0.295959
+offset_bottom = 0.264008
+
+[node name="play_button" type="Button" parent="CanvasLayer/ui/main_menu/VBoxContainer"]
+layout_mode = 2
+text = "Play
+"
+expand_icon = true
+
+[node name="options_button" type="Button" parent="CanvasLayer/ui/main_menu/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="exit_button" type="Button" parent="CanvasLayer/ui/main_menu/VBoxContainer"]
+layout_mode = 2
+text = "Exit
+"
