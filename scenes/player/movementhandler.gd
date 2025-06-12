@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Define constants for movement
-const SPEED = 200
+const SPEED = 400
 const JUMP_FORCE = -400
 const GRAVITY = 800
 
@@ -20,11 +20,15 @@ func _physics_process(delta):
 
 	# Handle horizontal movement
 	if Input.is_action_pressed(INPUT_RUN_RIGHT):
-		velocity.x = SPEED
+		velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
 	elif Input.is_action_pressed(INPUT_RUN_LEFT):
-		velocity.x = -SPEED
+		velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
 	else:
-		velocity.x = 0
+		# Apply friction based on whether the player is on the floor
+		if is_on_floor():
+			velocity.x = lerp(velocity.x, 0.0, 0.05)  # Slowdown on the ground for more momentum
+		else:
+			velocity.x = lerp(velocity.x, 0.0, 0.002)  # Even slower slowdown in the air for noticeable momentum
 
 	# Handle jumping
 	if Input.is_action_just_pressed(INPUT_JUMP) and is_on_floor():
