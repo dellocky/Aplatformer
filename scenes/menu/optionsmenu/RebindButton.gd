@@ -2,7 +2,7 @@ class_name RebindButton
 
 extends Button
 signal input_captured(value: String)
-signal button_rebind(value: Array[String])
+signal button_rebind(value: Array)
 
 var action
 var is_waiting_for_input := false
@@ -11,7 +11,8 @@ func _on_button_pressed():
 	print("Waiting for input...")
 	var input = await wait_for_user_input()
 	print("User chose:", input)
-	emit_signal("button_rebind", [action, input])
+	print([action, input])
+	emit_signal("button_rebind", [str(action), str(input)])
 
 func _input(event):
 	if not is_waiting_for_input:

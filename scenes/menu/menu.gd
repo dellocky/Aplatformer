@@ -1,4 +1,23 @@
 extends Node
+
+
+# Preload the scene (this is faster and better for small projects)
+var OptionsMenuScene := preload("res://scenes/menu/optionsmenu/optionsmenu.tscn")
+@onready var settings_node := get_node("data/settings")
+@onready var signal_settings := get_node("signal_control/signal_settings")
+@onready var options_button = get_node("ui/main_menu/options_button")
+
+func _ready() -> void:
+	pass
+	#options_button.pressed.connect(_on_options_button_pressed)
+
+func _on_options_button_pressed() -> void:
+	var options_instance = OptionsMenuScene.instantiate()
+	add_child(options_instance)
+	options_instance.update_hotkey_data.connect(signal_settings.rebind)
+	get_node("ui/main_menu").queue_free()
+
+"""
 var settings_node
 var assignevent
 func _ready() -> void:
@@ -23,4 +42,5 @@ func _ready() -> void:
 func _process(_delta_time):
 	if Input.is_action_pressed("key"):
 		print("yep!")
+"""
 	
