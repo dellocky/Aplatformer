@@ -1,0 +1,84 @@
+[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://cxct23har2jb4"]
+
+[ext_resource type="Texture2D" uid="uid://ddyyms7oav86u" path="res://scenes/player/animations/idle/1.png" id="1_0tsck"]
+[ext_resource type="Texture2D" uid="uid://cbfn4x85fo50l" path="res://scenes/player/animations/jump/1.png" id="1_7p5m4"]
+[ext_resource type="Texture2D" uid="uid://i2vd86j8c3ki" path="res://scenes/player/animations/jump/2.png" id="2_6qpmh"]
+[ext_resource type="Texture2D" uid="uid://dlyfn6qlgxtb1" path="res://scenes/player/animations/idle/2.png" id="2_sw3dh"]
+[ext_resource type="Texture2D" uid="uid://dpsrw18f1kguq" path="res://scenes/player/animations/jump/3.png" id="3_o8hcu"]
+[ext_resource type="Texture2D" uid="uid://68etla32nh5s" path="res://scenes/player/animations/idle/3.png" id="3_xeooc"]
+[ext_resource type="Texture2D" uid="uid://dlmpdkdje7o7k" path="res://scenes/player/animations/run/1.png" id="4_awube"]
+[ext_resource type="Texture2D" uid="uid://4g7t4v52u2a2" path="res://scenes/player/animations/idle/4.png" id="4_xtpy6"]
+[ext_resource type="Texture2D" uid="uid://b14xa1uj7uam4" path="res://scenes/player/animations/idle/5.png" id="5_1p1xn"]
+[ext_resource type="Texture2D" uid="uid://bpk8qnt4i1n12" path="res://scenes/player/animations/run/2.png" id="5_g5hqd"]
+[ext_resource type="Texture2D" uid="uid://due1cpkws1fs0" path="res://scenes/player/animations/run/3.png" id="6_0tsck"]
+[ext_resource type="Texture2D" uid="uid://cjcylalcre1k5" path="res://scenes/player/animations/run/4.png" id="7_sw3dh"]
+[ext_resource type="Texture2D" uid="uid://bwrqs25bdwlqh" path="res://scenes/player/animations/run/5.png" id="8_xeooc"]
+[ext_resource type="Texture2D" uid="uid://buif81kumwj1v" path="res://scenes/player/animations/run/6.png" id="9_xtpy6"]
+[ext_resource type="Texture2D" uid="uid://b2uof8nyqjthm" path="res://scenes/player/animations/run/7.png" id="10_1p1xn"]
+[ext_resource type="Texture2D" uid="uid://cgca1cf4xj5ce" path="res://scenes/player/animations/run/8.png" id="11_wkun6"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0tsck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_sw3dh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xeooc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xtpy6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1p1xn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7p5m4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6qpmh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o8hcu")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_awube")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_g5hqd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0tsck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_sw3dh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xeooc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_xtpy6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1p1xn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wkun6")
+}],
+"loop": true,
+"name": &"run",
+"speed": 9.0
+}]
