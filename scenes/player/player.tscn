@@ -1,10 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpvkyu4ndrbih"]
+[gd_scene load_steps=4 format=3 uid="uid://dpvkyu4ndrbih"]
 
 [ext_resource type="Script" uid="uid://d0u67qkkyis8w" path="res://scenes/player/movementhandler.gd" id="1_dovo2"]
-[ext_resource type="Texture2D" uid="uid://ctn5f8mkgum4w" path="res://scenes/player/ComfyUI_00059_ edit 64 bit.png" id="2_gmlin"]
+[ext_resource type="SpriteFrames" uid="uid://cxct23har2jb4" path="res://scenes/player/animations/new_sprite_frames.tres" id="2_dovo2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
+size = Vector2(38, 64)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_dovo2")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_gmlin")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_gmlin")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.49012e-08, 4)
+sprite_frames = ExtResource("2_dovo2")
+animation = &"idle"
+frame_progress = 0.199024

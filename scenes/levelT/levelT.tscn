@@ -1,20 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw3qxfw65dkfl"]
+[gd_scene load_steps=3 format=3 uid="uid://dw3qxfw65dkfl"]
 
 [ext_resource type="PackedScene" uid="uid://dpvkyu4ndrbih" path="res://scenes/player/player.tscn" id="1_dptus"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dptus"]
-size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yicw7"]
 size = Vector2(20000, 20)
 
 [node name="LevelT" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_dptus")]
-position = Vector2(1, -1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("RectangleShape2D_dptus")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 self_modulate = Color(1, 0, 1, 1)
@@ -32,3 +23,5 @@ offset_right = 10093.0
 offset_bottom = 74.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_dptus")]
