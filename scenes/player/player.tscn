@@ -18,3 +18,6 @@ position = Vector2(1.49012e-08, 4)
 sprite_frames = ExtResource("2_dovo2")
 animation = &"idle"
 frame_progress = 0.199024
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
