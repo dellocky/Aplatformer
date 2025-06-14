@@ -3,7 +3,6 @@ extends CharacterBody2D
 # movement params
 const SPEED       = 400
 const JUMP_FORCE  = -400
-const GRAVITY     = 800
 
 #animation params
 const IDLE_SPEED = SPEED / 40
@@ -24,11 +23,9 @@ func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
 	#print (velocity.x)
 	# vertical
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
-	else:
-		velocity.y = 0
-		if Input.is_action_just_pressed(INPUT_JUMP):
+	velocity.y = GravityProcessor.apply_gravity(velocity.y, is_on_floor(), delta)
+	
+	if Input.is_action_just_pressed(INPUT_JUMP):
 			velocity.y = JUMP_FORCE
 
 	# horizontal
