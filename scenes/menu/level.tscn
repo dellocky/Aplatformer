@@ -74,3 +74,5 @@ text = "Options"
 layout_mode = 2
 text = "Exit
 "
+
+[connection signal="button_down" from="CanvasLayer/ui/main_menu/VBoxContainer/play_button" to="." method="_on_play_button_button_down"]
