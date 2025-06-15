@@ -49,7 +49,11 @@ func _physics_process(delta):
 		# always override with jump
 		sprite.frames = jump_frames
 		sprite.play("jump")
-		# preserve the direction you were facing when you jumped
+		# Ensure the sprite flips to face the direction of movement when jumping
+		if velocity.x > 0:
+			sprite.flip_h = true
+		elif velocity.x < 0:
+			sprite.flip_h = false
 	elif abs(velocity.x) > IDLE_SPEED:
 		# play run animation if velocity greater than 0, flip sprite based on direction
 		sprite.play("run")
@@ -71,3 +75,5 @@ func _physics_process(delta):
 			sprite.speed_scale = 1  # Reset animation speed to normal
 	else:
 		current_idle_time = 0  # Reset idle time if player is moving
+	
+	
