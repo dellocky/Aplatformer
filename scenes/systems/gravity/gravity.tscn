@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bu22yyhawjftt"]
+
+[node name="GravityBody" type="CharacterBody2D"]

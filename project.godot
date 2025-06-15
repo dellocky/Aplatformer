@@ -15,6 +15,10 @@ run/main_scene="uid://bl6rn1y6tepmc"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GravityProcessor="*res://scenes/systems/gravity/GravityProcessor.gd"
+
 [dotnet]
 
 project/assembly_name="Platformer"
@@ -51,3 +55,4 @@ DUCK={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_transforms_to_pixel=true
