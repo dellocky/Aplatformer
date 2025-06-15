@@ -25,7 +25,7 @@ func _physics_process(delta):
 	# vertical
 	velocity.y = GravityProcessor.apply_gravity(velocity.y, is_on_floor(), delta)
 	
-	if Input.is_action_just_pressed(INPUT_JUMP):
+	if Input.is_action_just_pressed(INPUT_JUMP) and is_on_floor():
 			velocity.y = JUMP_FORCE
 
 	# horizontal
