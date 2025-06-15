@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends hitable_entity
 
 # movement params
 const SPEED       = 400
@@ -18,6 +18,9 @@ const INPUT_DUCK      = "DUCK"
 # cache your resources once
 @onready var sprite       = $AnimatedSprite2D
 @onready var jump_frames  = preload("res://scenes/player/animations/new_sprite_frames.tres")
+
+func _ready() -> void:
+	health = 100
 
 func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
