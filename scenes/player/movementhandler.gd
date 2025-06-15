@@ -28,17 +28,32 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed(INPUT_JUMP):
 			velocity.y = JUMP_FORCE
 
-	# horizontal
+	# Handle jumping
+	if Input.is_action_just_pressed(INPUT_JUMP) and is_on_floor():
+		velocity.y = JUMP_FORCE
+		$AnimatedSprite2D.frames = preload("res://scenes/player/animations/new_sprite_frames.tres")
+		$AnimatedSprite2D.play("jump")  # Ensure the animation is played
+
+	# Handle horizontal movement
+
 	if Input.is_action_pressed(INPUT_RUN_RIGHT):
 		velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
+		$AnimatedSprite2D.frames = preload("res://scenes/player/animations/new_sprite_frames.tres")
+		$AnimatedSprite2D.flip_h = true  # Ensure the animation is flipped
+		$AnimatedSprite2D.play("run")  # Ensure the animation is played
 	elif Input.is_action_pressed(INPUT_RUN_LEFT):
 		velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
+		$AnimatedSprite2D.frames = preload("res://scenes/player/animations/new_sprite_frames.tres")
+		$AnimatedSprite2D.flip_h = false  # not flipped anim
+		$AnimatedSprite2D.play("run")  # Ensure the animation is played
 	else:
 		# ramp speed up/down depending on floor/air
 		if is_on_floor():
 			velocity.x = lerp(velocity.x, 0.0, 0.05)  # Slowdown on the ground for more momentum
 		else:
 			velocity.x = lerp(velocity.x, 0.0, 0.002)  # Even slower slowdown in the air for noticeable momentum
+
+	# Handle ducking
 	if Input.is_action_pressed(INPUT_DUCK):
 			velocity.x = 0  # Stop horizontal movement while ducking
 	# apply movement

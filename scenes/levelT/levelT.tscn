@@ -22,4 +22,4 @@ offset_top = 34.0
 offset_right = 10093.0
 offset_bottom = 74.0
 
-[node name="Player" parent="." instance=ExtResource("1_dptus")]
+[node name="Camera2D" type="Camera2D" parent="."]
