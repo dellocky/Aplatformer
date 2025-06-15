@@ -3,6 +3,7 @@ extends Node
 
 # Preload the scene (this is faster and better for small projects)
 var OptionsMenuScene := preload("res://scenes/menu/optionsmenu/optionsmenu.tscn")
+var level  = preload("res://scenes/levelT/levelT.tscn")
 @onready var settings_node := get_node("data/settings")
 @onready var signal_settings := get_node("signal_control/signal_settings")
 @onready var options_button = get_node("ui/main_menu/options_button")
@@ -16,6 +17,14 @@ func _on_options_button_pressed() -> void:
 	add_child(options_instance)
 	options_instance.update_hotkey_data.connect(signal_settings.rebind)
 	get_node("ui/main_menu").queue_free()
+
+
+
+func _on_play_button_button_down() -> void:
+	var level_instance = level.instantiate()
+	add_child(level_instance)
+	get_node("CanvasLayer/ui/main_menu").queue_free()
+
 
 """
 var settings_node
@@ -43,4 +52,3 @@ func _process(_delta_time):
 	if Input.is_action_pressed("key"):
 		print("yep!")
 """
-	
