@@ -1,11 +1,14 @@
 extends hitable_entity
 
+var touching_right_wall = false
+var touching_left_wall = false
+
 # movement params
 const SPEED       = 400
 const JUMP_FORCE  = -400
 
 #animation params
-const IDLE_SPEED = SPEED / 40
+const IDLE_SPEED = float(SPEED) / 40
 var wait_for_idle = true
 const TIME_FOR_IDLE = 2
 var current_idle_time = 0
@@ -22,12 +25,19 @@ const INPUT_DUCK      = "DUCK"
 func _ready() -> void:
 	health = 100
 
+# Add a timer to ensure print statements execute once per second
+var time_since_last_print = 0.0
+
+
 func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
 	#print (velocity.x)
 	# vertical
 	velocity.y = GravityProcessor.apply_gravity(velocity.y, is_on_floor(), delta)
-	
+
+	if GravityProcessor.touching_left_wall == true or GravityProcessor.touching_right_wall == true:
+		GravityProcessor.GRAVITY= 0
+
 	if Input.is_action_just_pressed(INPUT_JUMP) and is_on_floor():
 			velocity.y = JUMP_FORCE
 
@@ -93,5 +103,3 @@ func _physics_process(delta):
 			sprite.speed_scale = 1  # Reset animation speed to normal
 	else:
 		current_idle_time = 0  # Reset idle time if player is moving
-	
-	

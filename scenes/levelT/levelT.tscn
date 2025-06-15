@@ -1,15 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw3qxfw65dkfl"]
+[gd_scene load_steps=6 format=4 uid="uid://dw3qxfw65dkfl"]
 
 [ext_resource type="PackedScene" uid="uid://dpvkyu4ndrbih" path="res://scenes/player/player.tscn" id="1_dptus"]
+[ext_resource type="Texture2D" uid="uid://bypisxtpyfc74" path="res://resources/tilemap/64.png" id="2_yicw7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yicw7"]
 size = Vector2(20000, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dptus"]
-size = Vector2(200, 20)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txfjj"]
+texture = ExtResource("2_yicw7")
+4:0/size_in_atlas = Vector2i(4, 4)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
-[sub_resource type="QuadMesh" id="QuadMesh_yicw7"]
-size = Vector2(200, 20)
+[sub_resource type="TileSet" id="TileSet_enjac"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_txfjj")
 
 [node name="LevelT" type="Node2D"]
 
@@ -18,84 +27,20 @@ self_modulate = Color(1, 0, 1, 1)
 position = Vector2(-1, 40)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(-7, 49)
+position = Vector2(-7, 34)
 shape = SubResource("RectangleShape2D_yicw7")
 
 [node name="ColorRect" type="ColorRect" parent="Floor"]
 clip_contents = true
-offset_left = -9907.0
-offset_top = 34.0
-offset_right = 10093.0
-offset_bottom = 1078.0
+offset_left = -9911.0
+offset_top = 24.0
+offset_right = 10089.0
+offset_bottom = 1068.0
 color = Color(0.48, 0.43824, 0.3936, 1)
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1_dptus")]
 
-[node name="platforms" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="platforms"]
-position = Vector2(350, -30)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="platforms"]
-position = Vector2(700, -60)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D2"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="platforms"]
-position = Vector2(1050, -90)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D3"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="platforms"]
-position = Vector2(785, -252)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D4"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="platforms"]
-position = Vector2(1352, -192)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D5"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-position = Vector2(1807.5, -418.5)
-scale = Vector2(1.765, 49.15)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="platforms/MeshInstance2D"]
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="platforms"]
-position = Vector2(1257, -480)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D6"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="platforms/CollisionShape2D6"]
-position = Vector2(-7, -309)
-shape = SubResource("RectangleShape2D_dptus")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platforms/CollisionShape2D6/CollisionShape2D5"]
-modulate = Color(0.59, 0.34043, 0.0354, 1)
-mesh = SubResource("QuadMesh_yicw7")
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAACAP//AQAEAAAAAAADAP//AQAEAAAAAAAEAP//AQAEAAAAAAAFAP//AQAEAAAAAAAIAP7/AQAEAAAAAAAJAP7/AQAEAAAAAAAKAP7/AQAEAAAAAAANAP3/AQAEAAAAAAAOAP3/AQAEAAAAAAASAPP/AQAEAAAAAAASAPT/AQAEAAAAAAASAPX/AQAEAAAAAAASAPb/AQAEAAAAAAASAPf/AQAEAAAAAAASAPj/AQAEAAAAAAASAPn/AQAEAAAAAAASAPr/AQAEAAAAAAASAPv/AQAEAAAAAAASAPz/AQAEAAAAAAASAP3/AQAEAAAAAAASAP7/AQAEAAAAAAASAP//AQAEAAAAAAASAAAAAQAEAAAAAAASAAEAAQAEAAAAAAATAPP/AQAEAAAAAAATAPT/AQAEAAAAAAATAPX/AQAEAAAAAAATAPb/AQAEAAAAAAATAPf/AQAEAAAAAAATAPj/AQAEAAAAAAATAPn/AQAEAAAAAAATAPr/AQAEAAAAAAATAPv/AQAEAAAAAAATAPz/AQAEAAAAAAATAP3/AQAEAAAAAAATAP7/AQAEAAAAAAATAP//AQAEAAAAAAATAAAAAQAEAAAAAAATAAEAAQAEAAAAAAAUAPP/AQAEAAAAAAAUAPT/AQAEAAAAAAAUAPX/AQAEAAAAAAAUAPb/AQAEAAAAAAAUAPf/AQAEAAAAAAAUAPj/AQAEAAAAAAAUAPn/AQAEAAAAAAAUAPr/AQAEAAAAAAAUAPv/AQAEAAAAAAAUAPz/AQAEAAAAAAAUAP3/AQAEAAAAAAAUAP7/AQAEAAAAAAAUAP//AQAEAAAAAAAUAAAAAQAEAAAAAAAUAAEAAQAEAAAAAAANAPf/AQAEAAAAAAAOAPf/AQAEAAAAAAANAPP/AQAEAAAAAAAOAPP/AQAEAAAAAAA=")
+tile_set = SubResource("TileSet_enjac")
