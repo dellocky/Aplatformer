@@ -1,11 +1,11 @@
 extends hitable_entity
 
-var touching_right_wall = false
-var touching_left_wall = false
-
 # movement params
 const SPEED       = 400
 const JUMP_FORCE  = -400.0
+var wall_jump_power = 800.0
+var wall_slide_friction = 100
+var is_wall_sliding = false
 
 #animation params
 const IDLE_SPEED = float(SPEED) / 40
@@ -28,34 +28,57 @@ func _ready() -> void:
 # Add a timer to ensure print statements execute once per second
 var time_since_last_print = 0.0
 
-var wall_jump_timer = 0.0  # Moved to class level
+#var wall_jump_timer = 0.0  # Moved to class level
 
 func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
 	#print (velocity.x)
 	# vertical
-	wall_jump_timer += delta # Increment timer since last wall jump
+	#wall_jump_timer += delta # Increment timer since last wall jump
 	velocity.y = GravityProcessor.apply_gravity(velocity.y, is_on_floor(), delta)
-
-	if is_on_wall():
+	#wallslide
+	#if is_on_wall():
 		# Only start wall stick if we haven't wall jumped recently
-		GravityProcessor.GRAVITY = lerp(400, 800, 0.1)  # Adjust gravity for wall stick
-	else:
-		GravityProcessor.GRAVITY = 800  # Reset gravity when not on a wall
+	#	GravityProcessor.GRAVITY = lerp(150, 800, 0.9)  # Adjust gravity for wall stick
+#	else:
+	#	GravityProcessor.GRAVITY = 800  # Reset gravity when not on a wall
 
 	# Handle jumping
 	if Input.is_action_just_pressed(INPUT_JUMP):
 		if is_on_floor():
 			velocity.y = JUMP_FORCE
-		elif is_on_wall() and wall_jump_timer >= 1.0:  # Changed to elif to avoid double jumping
-			velocity.y = JUMP_FORCE
-			wall_jump_timer = 0  # Reset wall jump timer
+		if is_on_wall():  # Changed to elif to avoid double jumping
+			if Input.is_action_pressed(INPUT_RUN_RIGHT):
+				velocity.y = JUMP_FORCE
+				velocity.x = -wall_jump_power  # Set horizontal velocity for wall jump
+			elif Input.is_action_pressed(INPUT_RUN_LEFT):
+				velocity.y = JUMP_FORCE
+				velocity.x = wall_jump_power  # Set horizontal velocity for wall jump
+				#wall_jump_timer = 0  # Reset wall jump timer
+	#wall slide
+	if is_on_wall() and not is_on_floor():
+		if Input.is_action_pressed(INPUT_RUN_RIGHT) or Input.is_action_pressed(INPUT_RUN_LEFT):
+			is_wall_sliding = true
+		else:
+			is_wall_sliding = false
+	else:
+		is_wall_sliding = false
+	if is_wall_sliding:
+		velocity.y = lerp(velocity.y, 0.0, delta * 5)  # Slow down vertical speed while wall sliding
+		velocity.y += (wall_slide_friction * delta)  # reduce gravity effect while wall sliding
+		
 	# Handle horizontal movement
 
 	if Input.is_action_pressed(INPUT_RUN_RIGHT):
-		velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
+		if is_on_floor():
+			velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
+		else:
+			velocity.x = lerp(velocity.x, float(SPEED), delta * 2)  # horizontal change slower in the air
 	elif Input.is_action_pressed(INPUT_RUN_LEFT):
-		velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
+		if is_on_floor():
+			velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
+		else:
+			velocity.x = lerp(velocity.x, float(-SPEED), delta * 2)  # horizontal change slower in the air
 	else:
 		# ramp speed up/down depending on floor/air
 		if is_on_floor():
