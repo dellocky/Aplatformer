@@ -18,3 +18,5 @@ shape = SubResource("RectangleShape2D_6dvuy")
 position = Vector2(1, 0)
 scale = Vector2(105, 75)
 texture = SubResource("PlaceholderTexture2D_gi4dl")
+
+[node name="Arrows" type="Node2D" parent="."]
