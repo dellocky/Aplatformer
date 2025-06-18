@@ -6,7 +6,14 @@ const JUMP_FORCE  = -400.0
 var wall_jump_power = 800.0
 var wall_slide_friction = 100
 var is_wall_sliding = false
-
+#dash params
+var is_dashing = false
+var dash_timer = 0.0  # Timer to track dash duration
+var run_press_count_left = 0
+var run_press_timer_left = 0.0
+var run_press_count_right = 0
+var run_press_timer_right = 0.0
+const DASH_WINDOW = 0.2  # seconds
 #animation params
 const IDLE_SPEED = float(SPEED) / 40
 var wait_for_idle = true
@@ -28,7 +35,9 @@ func _ready() -> void:
 # Add a timer to ensure print statements execute once per second
 var time_since_last_print = 0.0
 
-#var wall_jump_timer = 0.0  # Moved to class level
+var wall_jump_timer = 0.0  # Moved to class level
+var wall_stick_timer = 0.0  # Timer for forced wall stick after wall jump
+var is_wall_jumping = false  # Track if the player has recently wall jumped
 
 func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
@@ -47,14 +56,25 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed(INPUT_JUMP):
 		if is_on_floor():
 			velocity.y = JUMP_FORCE
-		if is_on_wall():  # Changed to elif to avoid double jumping
+		elif is_on_wall():  # Changed to elif to avoid double jumping
 			if Input.is_action_pressed(INPUT_RUN_RIGHT):
 				velocity.y = JUMP_FORCE
 				velocity.x = -wall_jump_power  # Set horizontal velocity for wall jump
+				wall_stick_timer = 1  # Force wall stick after wall jump
 			elif Input.is_action_pressed(INPUT_RUN_LEFT):
 				velocity.y = JUMP_FORCE
 				velocity.x = wall_jump_power  # Set horizontal velocity for wall jump
-				#wall_jump_timer = 0  # Reset wall jump timer
+				wall_stick_timer = 1  # Force wall stick after wall jump
+
+	if is_on_wall():
+			print("is on wall")
+
+	# Decrement wall stick timer
+	if wall_stick_timer > 0:
+		wall_stick_timer -= delta
+		is_wall_jumping = true  #
+	else:
+		is_wall_jumping = false
 	#wall slide
 	if is_on_wall() and not is_on_floor():
 		if Input.is_action_pressed(INPUT_RUN_RIGHT) or Input.is_action_pressed(INPUT_RUN_LEFT):
@@ -66,25 +86,64 @@ func _physics_process(delta):
 	if is_wall_sliding:
 		velocity.y = lerp(velocity.y, 0.0, delta * 5)  # Slow down vertical speed while wall sliding
 		velocity.y += (wall_slide_friction * delta)  # reduce gravity effect while wall sliding
-		
-	# Handle horizontal movement
-
-	if Input.is_action_pressed(INPUT_RUN_RIGHT):
-		if is_on_floor():
-			velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
-		else:
-			velocity.x = lerp(velocity.x, float(SPEED), delta * 2)  # horizontal change slower in the air
-	elif Input.is_action_pressed(INPUT_RUN_LEFT):
-		if is_on_floor():
-			velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
-		else:
-			velocity.x = lerp(velocity.x, float(-SPEED), delta * 2)  # horizontal change slower in the air
+#logic for dash conditions
+	if run_press_timer_right > 0:
+		run_press_timer_right -= delta
 	else:
-		# ramp speed up/down depending on floor/air
-		if is_on_floor():
-			velocity.x = lerp(velocity.x, 0.0, 0.05)  # Slowdown on the ground for more momentum
+		run_press_count_right = 0  # Reset if timer runs out
+
+	if run_press_timer_left > 0:
+		run_press_timer_left -= delta
+	else:
+		run_press_count_left = 0  # Reset if timer runs out
+
+	if Input.is_action_just_pressed(INPUT_RUN_RIGHT):
+		run_press_count_right += 1
+		if run_press_count_right == 1:
+			run_press_timer_right = DASH_WINDOW  # Start timer on first press
+		elif run_press_count_right == 2 and run_press_timer_right > 0.0:
+			is_dashing = true
+			dash_timer = 0.2  # Set dash duration
+			velocity.x = SPEED * 2  # Dash speed to the right
+			velocity.y = 0  # Neutralize vertical velocity during dash
+			run_press_count_right = 0  # Reset count after dash
+	if Input.is_action_just_pressed(INPUT_RUN_LEFT):
+		run_press_count_left += 1
+		if run_press_count_left == 1:
+			run_press_timer_left = DASH_WINDOW  # Start timer on first press
+		elif run_press_count_left == 2 and run_press_timer_left > 0.0:
+			is_dashing = true
+			dash_timer = 0.2  # Set dash duration
+			velocity.x = -SPEED * 2  # Dash speed to the left
+			velocity.y = 0  # Neutralize vertical velocity during dash
+			run_press_count_left = 0  # Reset count after dash
+# Update dash timer
+	if dash_timer > 0:
+		dash_timer -= delta
+	else:
+		is_dashing = false  # Reset dash state when timer expires
+
+	if is_dashing:
+		velocity.y = 0  # Keep vertical velocity neutral during dash
+
+	# Handle horizontal movement
+	if not is_wall_jumping:
+		if Input.is_action_pressed(INPUT_RUN_RIGHT):
+			if is_on_floor():
+					velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
+			else:
+					velocity.x = lerp(velocity.x, float(SPEED), delta * 2)  # horizontal change slower in the air
+		elif Input.is_action_pressed(INPUT_RUN_LEFT):
+			if is_on_floor():
+					velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
+			else:
+					velocity.x = lerp(velocity.x, float(-SPEED), delta * 2)  # horizontal change slower in the air
 		else:
-			velocity.x = lerp(velocity.x, 0.0, 0.002)  # Even slower slowdown in the air for noticeable momentum
+				# ramp speed up/down depending on floor/air
+			if is_on_floor():
+					velocity.x = lerp(velocity.x, 0.0, 0.05)  # Slowdown on the ground for more momentum
+			else:
+					velocity.x = lerp(velocity.x, 0.0, 0.002)  # Even slower slowdown in the air for noticeable momentum
 
 	# Handle ducking
 	if Input.is_action_pressed(INPUT_DUCK):
