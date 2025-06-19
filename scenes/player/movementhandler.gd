@@ -13,7 +13,15 @@ var run_press_count_left = 0
 var run_press_timer_left = 0.0
 var run_press_count_right = 0
 var run_press_timer_right = 0.0
-const DASH_WINDOW = 0.2  # seconds
+const DASH_WINDOW = 0.2  #the window for which an additional left/right input counts for starting a dash in seconds
+var dash_cooldown_time = 1.0  #this var controls dash cooldown duration in seconds
+var dash_cooldown = 0.0 # this just makes the var, leave it alone
+#wall jump params
+var wall_jump_timer = 0.0  # Moved to class level
+var wall_stick_timer = 0.0  # Timer for is wall jumping after a wall jump
+var wall_jump_time = 0.25  # Duration to consider as wall jumping
+var is_wall_jumping = false  # Track if the player has recently wall jumped
+var wall_stick_time = 0  # makes the var, leave it alone
 #animation params
 const IDLE_SPEED = float(SPEED) / 40
 var wait_for_idle = true
@@ -34,10 +42,6 @@ func _ready() -> void:
 
 # Add a timer to ensure print statements execute once per second
 var time_since_last_print = 0.0
-
-var wall_jump_timer = 0.0  # Moved to class level
-var wall_stick_timer = 0.0  # Timer for forced wall stick after wall jump
-var is_wall_jumping = false  # Track if the player has recently wall jumped
 
 func _physics_process(delta):
 	# ─── 1) PHYSICS ─────────────────────────────────────────
@@ -60,11 +64,11 @@ func _physics_process(delta):
 			if Input.is_action_pressed(INPUT_RUN_RIGHT):
 				velocity.y = JUMP_FORCE
 				velocity.x = -wall_jump_power  # Set horizontal velocity for wall jump
-				wall_stick_timer = 1  # Force wall stick after wall jump
+				wall_stick_timer = wall_jump_time  # Force wall stick after wall jump
 			elif Input.is_action_pressed(INPUT_RUN_LEFT):
 				velocity.y = JUMP_FORCE
 				velocity.x = wall_jump_power  # Set horizontal velocity for wall jump
-				wall_stick_timer = 1  # Force wall stick after wall jump
+				wall_stick_timer = wall_jump_time  # Force wall stick after wall jump
 
 	if is_on_wall():
 			print("is on wall")
@@ -73,8 +77,10 @@ func _physics_process(delta):
 	if wall_stick_timer > 0:
 		wall_stick_timer -= delta
 		is_wall_jumping = true  #
+		wall_stick_time = 1 #if a wall stick timer is started, start the wall stick time timer as well, which prevents vertical velocity for a short duration if the player is wall sliding after a wall jump
 	else:
 		is_wall_jumping = false
+		wall_stick_time -= delta
 	#wall slide
 	if is_on_wall() and not is_on_floor():
 		if Input.is_action_pressed(INPUT_RUN_RIGHT) or Input.is_action_pressed(INPUT_RUN_LEFT):
@@ -86,6 +92,8 @@ func _physics_process(delta):
 	if is_wall_sliding:
 		velocity.y = lerp(velocity.y, 0.0, delta * 5)  # Slow down vertical speed while wall sliding
 		velocity.y += (wall_slide_friction * delta)  # reduce gravity effect while wall sliding
+	if is_wall_sliding and wall_stick_time >= 0 and wall_stick_timer <= 0:
+		velocity.y = 0  # Neutralize vertical velocity a short duration after landing from a wall jump
 #logic for dash conditions
 	if run_press_timer_right > 0:
 		run_press_timer_right -= delta
@@ -101,30 +109,34 @@ func _physics_process(delta):
 		run_press_count_right += 1
 		if run_press_count_right == 1:
 			run_press_timer_right = DASH_WINDOW  # Start timer on first press
-		elif run_press_count_right == 2 and run_press_timer_right > 0.0:
+		elif run_press_count_right == 2 and run_press_timer_right > 0.0 and dash_cooldown <= 0.0:
 			is_dashing = true
 			dash_timer = 0.2  # Set dash duration
-			velocity.x = SPEED * 2  # Dash speed to the right
-			velocity.y = 0  # Neutralize vertical velocity during dash
 			run_press_count_right = 0  # Reset count after dash
+			dash_cooldown = dash_cooldown_time  # Start dash cooldown
 	if Input.is_action_just_pressed(INPUT_RUN_LEFT):
 		run_press_count_left += 1
 		if run_press_count_left == 1:
 			run_press_timer_left = DASH_WINDOW  # Start timer on first press
-		elif run_press_count_left == 2 and run_press_timer_left > 0.0:
+		elif run_press_count_left == 2 and run_press_timer_left > 0.0 and dash_cooldown <= 0.0:
 			is_dashing = true
 			dash_timer = 0.2  # Set dash duration
-			velocity.x = -SPEED * 2  # Dash speed to the left
-			velocity.y = 0  # Neutralize vertical velocity during dash
 			run_press_count_left = 0  # Reset count after dash
+			dash_cooldown = dash_cooldown_time  # Start dash cooldown
+
+	if Input.is_action_pressed(INPUT_RUN_RIGHT) and is_dashing:
+		velocity.x = SPEED * 2  # Dash speed to the right
+		velocity.y = 0  # Neutralize vertical velocity during dash
+	elif Input.is_action_pressed(INPUT_RUN_LEFT) and is_dashing:
+		velocity.x = -SPEED * 2  # Dash speed to the left
+		velocity.y = 0  # Neutralize vertical velocity during dash
 # Update dash timer
 	if dash_timer > 0:
 		dash_timer -= delta
 	else:
 		is_dashing = false  # Reset dash state when timer expires
-
-	if is_dashing:
-		velocity.y = 0  # Keep vertical velocity neutral during dash
+	if dash_cooldown > 0:
+		dash_cooldown -= delta
 
 	# Handle horizontal movement
 	if not is_wall_jumping:
