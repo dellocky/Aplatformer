@@ -14,7 +14,7 @@ var run_press_timer_left = 0.0
 var run_press_count_right = 0
 var run_press_timer_right = 0.0
 const DASH_WINDOW = 0.2  #the window for which an additional left/right input counts for starting a dash in seconds
-var dash_cooldown_time = 1.0  #this var controls dash cooldown duration in seconds
+var dash_cooldown_time = 2.0  #this var controls dash cooldown duration in seconds
 var dash_cooldown = 0.0 # this just makes the var, leave it alone
 #wall jump params
 var wall_jump_timer = 0.0  # Moved to class level
