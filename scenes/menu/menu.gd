@@ -3,7 +3,7 @@ extends Node
 
 # Preload the scene (this is faster and better for small projects)
 var OptionsMenuScene := preload("res://scenes/menu/optionsmenu/optionsmenu.tscn")
-var level  = preload("res://scenes/levelT/levelT.tscn")
+var level  = preload("res://scenes/levels/tutorial/tutlevel.tscn")
 @onready var settings_node := get_node("data/settings")
 @onready var signal_settings := get_node("signal_control/signal_settings")
 @onready var options_button = get_node("ui/main_menu/options_button")
