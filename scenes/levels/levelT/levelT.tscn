@@ -1,14 +1,14 @@
 [gd_scene load_steps=7 format=4 uid="uid://dw3qxfw65dkfl"]
 
-[ext_resource type="PackedScene" uid="uid://dpvkyu4ndrbih" path="res://scenes/player/player.tscn" id="1_dptus"]
-[ext_resource type="Texture2D" uid="uid://bypisxtpyfc74" path="res://resources/tilemap/64.png" id="2_yicw7"]
-[ext_resource type="PackedScene" uid="uid://b2rueoiwy5hvs" path="res://scenes/enemies/enemy_arrow_shooter.tscn" id="3_txfjj"]
+[ext_resource type="PackedScene" uid="uid://dpvkyu4ndrbih" path="res://scenes/player/player.tscn" id="1_1hbkd"]
+[ext_resource type="Texture2D" uid="uid://bypisxtpyfc74" path="res://resources/tilemap/64.png" id="2_vaufd"]
+[ext_resource type="PackedScene" uid="uid://b2rueoiwy5hvs" path="res://scenes/enemies/enemy_arrow_shooter.tscn" id="3_pf8a5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yicw7"]
 size = Vector2(20000, 20)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txfjj"]
-texture = ExtResource("2_yicw7")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uk3g7"]
+texture = ExtResource("2_vaufd")
 4:0/size_in_atlas = Vector2i(4, 4)
 4:0/0 = 0
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
@@ -19,7 +19,7 @@ texture = ExtResource("2_yicw7")
 [sub_resource type="TileSet" id="TileSet_enjac"]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
-sources/1 = SubResource("TileSetAtlasSource_txfjj")
+sources/1 = SubResource("TileSetAtlasSource_uk3g7")
 
 [node name="LevelT" type="Node2D"]
 
@@ -39,12 +39,12 @@ offset_right = 10089.0
 offset_bottom = 1068.0
 color = Color(0.48, 0.43824, 0.3936, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_dptus")]
+[node name="Player" parent="." instance=ExtResource("1_1hbkd")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAACAP//AQAEAAAAAAADAP//AQAEAAAAAAAEAP//AQAEAAAAAAAFAP//AQAEAAAAAAAIAP7/AQAEAAAAAAAJAP7/AQAEAAAAAAAKAP7/AQAEAAAAAAANAP3/AQAEAAAAAAAOAP3/AQAEAAAAAAASAPP/AQAEAAAAAAASAPT/AQAEAAAAAAASAPX/AQAEAAAAAAASAPb/AQAEAAAAAAASAPf/AQAEAAAAAAASAPj/AQAEAAAAAAASAPn/AQAEAAAAAAASAPr/AQAEAAAAAAASAPv/AQAEAAAAAAASAPz/AQAEAAAAAAASAP3/AQAEAAAAAAASAP7/AQAEAAAAAAASAP//AQAEAAAAAAATAPP/AQAEAAAAAAATAPT/AQAEAAAAAAATAPX/AQAEAAAAAAATAPb/AQAEAAAAAAATAPf/AQAEAAAAAAATAPj/AQAEAAAAAAATAPn/AQAEAAAAAAATAPr/AQAEAAAAAAATAPv/AQAEAAAAAAATAPz/AQAEAAAAAAATAP3/AQAEAAAAAAATAP7/AQAEAAAAAAATAP//AQAEAAAAAAAUAPP/AQAEAAAAAAAUAPT/AQAEAAAAAAAUAPX/AQAEAAAAAAAUAPb/AQAEAAAAAAAUAPf/AQAEAAAAAAAUAPj/AQAEAAAAAAAUAPn/AQAEAAAAAAAUAPr/AQAEAAAAAAAUAPv/AQAEAAAAAAAUAPz/AQAEAAAAAAAUAP3/AQAEAAAAAAAUAP7/AQAEAAAAAAAUAP//AQAEAAAAAAANAPf/AQAEAAAAAAAOAPf/AQAEAAAAAAANAPP/AQAEAAAAAAAOAPP/AQAEAAAAAAAZAPP/AQAAAAAAAAAZAPT/AQAAAAAAAAAZAPX/AQAAAAAAAAAZAPb/AQAAAAAAAAAZAPf/AQAAAAAAAAAZAPj/AQAAAAAAAAAZAPn/AQAAAAAAAAAZAPr/AQAAAAAAAAAZAPv/AQAAAAAAAAAZAPz/AQAAAAAAAAAZAP3/AQAAAAAAAAAZAP7/AQAAAAAAAAAZAP//AQAAAAAAAAAZAAAAAQAAAAAAAAAZAAEAAQAAAAAAAAAaAPP/AQAAAAAAAAAaAPT/AQAAAAAAAAAaAPX/AQAAAAAAAAAaAPb/AQAAAAAAAAAaAPf/AQAAAAAAAAAaAPj/AQAAAAAAAAAaAPn/AQAAAAAAAAAaAPr/AQAAAAAAAAAaAPv/AQAAAAAAAAAaAPz/AQAAAAAAAAAaAP3/AQAAAAAAAAAaAP7/AQAAAAAAAAAaAP//AQAAAAAAAAAaAAAAAQAAAAAAAAAaAAEAAQAAAAAAAAAbAPP/AQAAAAAAAAAbAPT/AQAAAAAAAAAbAPX/AQAAAAAAAAAbAPb/AQAAAAAAAAAbAPf/AQAAAAAAAAAbAPj/AQAAAAAAAAAbAPn/AQAAAAAAAAAbAPr/AQAAAAAAAAAbAPv/AQAAAAAAAAAbAPz/AQAAAAAAAAAbAP3/AQAAAAAAAAAbAP7/AQAAAAAAAAAbAP//AQAAAAAAAAAbAAAAAQAAAAAAAAAbAAEAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_enjac")
 
-[node name="Enemy Arrow Shooter" parent="." instance=ExtResource("3_txfjj")]
+[node name="Enemy Arrow Shooter" parent="." instance=ExtResource("3_pf8a5")]
 position = Vector2(-326, -13)

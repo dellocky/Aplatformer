@@ -142,14 +142,14 @@ func _physics_process(delta):
 	if not is_wall_jumping:
 		if Input.is_action_pressed(INPUT_RUN_RIGHT):
 			if is_on_floor():
-					velocity.x = lerp(velocity.x, float(SPEED), delta * 5)  # Gradually ramp up speed to max
+					velocity.x = lerp(velocity.x, float(SPEED), delta * 2)  # Gradually ramp up speed to max
 			else:
-					velocity.x = lerp(velocity.x, float(SPEED), delta * 2)  # horizontal change slower in the air
+					velocity.x = lerp(velocity.x, float(SPEED), delta * 1)  # horizontal change slower in the air
 		elif Input.is_action_pressed(INPUT_RUN_LEFT):
 			if is_on_floor():
-					velocity.x = lerp(velocity.x, float(-SPEED), delta * 5)  # Gradually ramp up speed to max
+					velocity.x = lerp(velocity.x, float(-SPEED), delta * 2)  # Gradually ramp up speed to max
 			else:
-					velocity.x = lerp(velocity.x, float(-SPEED), delta * 2)  # horizontal change slower in the air
+					velocity.x = lerp(velocity.x, float(-SPEED), delta * 1)  # horizontal change slower in the air
 		else:
 				# ramp speed up/down depending on floor/air
 			if is_on_floor():
@@ -194,3 +194,4 @@ func _physics_process(delta):
 			sprite.speed_scale = 1  # Reset animation speed to normal
 	else:
 		current_idle_time = 0  # Reset idle time if player is moving
+
