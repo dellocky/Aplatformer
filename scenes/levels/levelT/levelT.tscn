@@ -18,7 +18,8 @@ texture = ExtResource("2_vaufd")
 
 [sub_resource type="TileSet" id="TileSet_enjac"]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
 sources/1 = SubResource("TileSetAtlasSource_uk3g7")
 
 [node name="LevelT" type="Node2D"]
@@ -26,6 +27,8 @@ sources/1 = SubResource("TileSetAtlasSource_uk3g7")
 [node name="Floor" type="StaticBody2D" parent="."]
 self_modulate = Color(1, 0, 1, 1)
 position = Vector2(-1, 40)
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2(-7, 34)
@@ -40,6 +43,7 @@ offset_bottom = 1068.0
 color = Color(0.48, 0.43824, 0.3936, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_1hbkd")]
+collision_layer = 3
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -48,3 +52,5 @@ tile_set = SubResource("TileSet_enjac")
 
 [node name="Enemy Arrow Shooter" parent="." instance=ExtResource("3_pf8a5")]
 position = Vector2(-326, -13)
+
+[node name="Projectiles" type="Node2D" parent="."]
