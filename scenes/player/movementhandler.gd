@@ -194,4 +194,3 @@ func _physics_process(delta):
 			sprite.speed_scale = 1  # Reset animation speed to normal
 	else:
 		current_idle_time = 0  # Reset idle time if player is moving
-

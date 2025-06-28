@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2rueoiwy5hvs"]
 
-[ext_resource type="Script" uid="uid://jwtsl78ppktd" path="res://enemy_arrow_shooter.gd" id="1_ty07c"]
+[ext_resource type="Script" uid="uid://jwtsl78ppktd" path="res://scenes/enemies/enemy_arrow_shooter.gd" id="1_ty07c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6dvuy"]
 size = Vector2(103, 75)
@@ -9,14 +9,21 @@ size = Vector2(103, 75)
 
 [node name="Enemy Arrow Shooter" type="CharacterBody2D"]
 script = ExtResource("1_ty07c")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(52.5, 36.5)
 shape = SubResource("RectangleShape2D_6dvuy")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
 scale = Vector2(105, 75)
 texture = SubResource("PlaceholderTexture2D_gi4dl")
+metadata/_edit_lock_ = true
 
-[node name="Arrows" type="Node2D" parent="."]
+[node name="Left Bow" type="Node2D" parent="."]
+position = Vector2(7, 37)
+
+[node name="Right Bow" type="Node2D" parent="."]
+position = Vector2(99, 37)
